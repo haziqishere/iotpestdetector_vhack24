@@ -54,3 +54,4 @@ python3 classify.py
         --model yamnet.tflite \
         --maxResults 5
     ```
+# iotpestdetector_vhack24
