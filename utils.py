@@ -1,4 +1,3 @@
-"""A module with util functions."""
 import os
 import sys
 from pathlib import Path
@@ -18,41 +17,49 @@ rcParams.update({
 })
 
 class Plotter(object):
-  """An util class to display the classification results."""
+    """An util class to display the classification results."""
 
-  _PAUSE_TIME = 0.05
-  """Time for matplotlib to wait for UI event."""
+    _PAUSE_TIME = 0.05
+    """Time for matplotlib to wait for UI event."""
 
-  def __init__(self) -> None:
-    fig, self._axes = plt.subplots()
-    fig.canvas.manager.set_window_title('Audio classification')
+    def __init__(self) -> None:
+        fig, self._axes = plt.subplots()
+        fig.canvas.manager.set_window_title('Audio classification')
 
-    # Stop the program when the ESC key is pressed.
-    def event_callback(event):
-      if event.key == 'escape':
-        sys.exit(0)
+        # Stop the program when the ESC key is pressed.
+        def event_callback(event):
+            if event.key == 'escape':
+                sys.exit(0)
 
-    fig.canvas.mpl_connect('key_press_event', event_callback)
+        fig.canvas.mpl_connect('key_press_event', event_callback)
 
-    plt.show(block=False)
+        plt.show(block=False)
 
-  def plot(self, result: audio.AudioClassifierResult) -> None:
-    """Plot the audio classification result.
-    Args:
+    def plot(self, result: audio.AudioClassifierResult) -> None:
+      """Plot the audio classification result.
+      Args:
       result: Classification results returned by an audio classification
-        model.
-    """
-    # Clear the axes
-    self._axes.cla()
-    self._axes.set_title('Press ESC to exit.')
-    self._axes.set_xlim((0, 1))
+          model.
+      """
+      # Clear the axes
+      self._axes.cla()
+      self._axes.set_title('Press ESC to exit.')
+      self._axes.set_xlim((0, 1))
 
-    # Plot the results so that the most probable category comes at the top.
-    classification = result.classifications[0]
-    label_list = [category.category_name
+      # Plot the results so that the most probable category comes at the top.
+      classification = result.classifications[0]
+      label_list = [category.category_name
                   for category in classification.categories]
-    score_list = [category.score for category in classification.categories]
-    self._axes.barh(label_list[::-1], score_list[::-1])
+      score_list = [category.score for category in classification.categories]
 
-    # Wait for the UI event.
-    plt.pause(self._PAUSE_TIME)
+      # Check if "Cat" category is in the classification results
+      if "Cat" in label_list:
+          cat_index = label_list.index("Cat")
+          cat_score = score_list[cat_index]
+          if cat_score > 0.8:
+              print("Cat detected")
+
+      self._axes.barh(label_list[::-1], score_list[::-1])
+
+      # Wait for the UI event.
+      plt.pause(self._PAUSE_TIME)
