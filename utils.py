@@ -52,12 +52,38 @@ class Plotter(object):
                   for category in classification.categories]
       score_list = [category.score for category in classification.categories]
 
+
       # Check if "Cat" category is in the classification results
-      if "Cat" in label_list:
-          cat_index = label_list.index("Cat")
-          cat_score = score_list[cat_index]
-          if cat_score > 0.8:
-              print("Cat detected")
+      print("Hello")
+      if "Background Noise" in label_list:
+          background_index = label_list.index("Backgrond Noise")
+          background_score = score_list[background_index]
+          if background_score > 0.8:
+              print("Diam je yak yak ke")
+      if "Bird" in label_list:
+          bird_index = label_list.index("Bird")
+          bird_score = score_list[bird_index]
+          if bird_score > 0.8:
+              print("Bebird sape yang bunyi tu")
+      if "Grasshopper" in label_list:
+          grasshopper_index = label_list.index("Grasshopper")
+          grasshopper_score = score_list[grasshopper_index]
+          if grasshopper_score > 0.8:
+              print("Belalang kupu kupu")
+
+      if "Rat" in label_list:
+          rat_index = label_list.index("Rat")
+          rat_score = score_list[rat_index]
+          if rat_score > 0.8:
+              print("Cit Cit")
+      if "Snake" in label_list:
+          snake_index = label_list.index("Snake")
+          snake_score = score_list[snake_index]
+          if snake_score > 0.8:
+              print("SSSSSSSSSSSSSSS motherfucker")
+              
+     
+
 
       self._axes.barh(label_list[::-1], score_list[::-1])
 

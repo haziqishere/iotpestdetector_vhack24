@@ -91,7 +91,7 @@ def main():
       '--model',
       help='Name of the audio classification model.',
       required=False,
-      default='yamnet.tflite')
+      default='soundclassifier_with_metadata.tflite')
   parser.add_argument(
       '--maxResults',
       help='Maximum number of results to show.',
