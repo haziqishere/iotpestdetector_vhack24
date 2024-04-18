@@ -1,6 +1,18 @@
 import os
 import sys
 from pathlib import Path
+import pyrebase
+
+config = {
+  "apiKey": "VFJ3VLwCQIbttdTOnZBuMoj88OmxAsgUPx0VVCBY",
+  "authDomain": "vhack-rice-rescue.firebaseapp.com",
+  "databaseURL": "https://vhack-rice-rescue-default-rtdb.firebaseio.com",
+  "storageBucket": "vhack-rice-rescue.appspot.com"
+}
+
+firebase = pyrebase.initialize_app(config)
+
+db = firebase.database()
 
 import tkinter as tk  # Importing Tkinter
 
@@ -55,6 +67,7 @@ class Plotter(object):
 
       # Check if "Cat" category is in the classification results
       print("Hello")
+      flag = True
       if "Background Noise" in label_list:
           background_index = label_list.index("Backgrond Noise")
           background_score = score_list[background_index]
@@ -64,7 +77,15 @@ class Plotter(object):
           bird_index = label_list.index("Bird")
           bird_score = score_list[bird_index]
           if bird_score > 0.8:
+              data={
+                  "bird" : True
+              }
               print("Bebird sape yang bunyi tu")
+          else:
+              data={
+                  "bird" : False
+              }
+              
       if "Grasshopper" in label_list:
           grasshopper_index = label_list.index("Grasshopper")
           grasshopper_score = score_list[grasshopper_index]
@@ -81,6 +102,9 @@ class Plotter(object):
           snake_score = score_list[snake_index]
           if snake_score > 0.8:
               print("SSSSSSSSSSSSSSS motherfucker")
+
+      db.child("vhack-rice-rescue").child("1-set").set(data)
+      db.child("vhack-rice-rescue").child("2-push").set(data)
               
      
 
