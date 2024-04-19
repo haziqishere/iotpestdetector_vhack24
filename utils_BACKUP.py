@@ -4,9 +4,10 @@ from pathlib import Path
 
 from pymongo import MongoClient
 
-connection_string = "mongodb+srv://kymzul27:kymzul2002@kymcluster.wllwwf2.mongodb.net/?retryWrites=true&w=majority&connectTimeoutMS=60000"
-print(f"Connecting to MongoDB: {connection_string}")  # Added for debugging
-client = MongoClient(connection_string)
+
+# Connect to MongoDB
+
+client = MongoClient('mongodb://kymzul27:kymzul2002@1.2.3.4:27017/?retryWrites=true&w=majority')
 db = client.ricerescue
 collection = db.pests
 
