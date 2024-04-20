@@ -55,6 +55,8 @@ class Plotter(object):
                       for category in classification.categories]
         score_list = [category.score for category in classification.categories]
 
+        cat_score = None  # Initialize cat_score before the if-elif-else chain
+
         # Check if "Cat" category is in the classification results
         if "Cat" in label_list:
             cat_index = label_list.index("Cat")
@@ -65,49 +67,22 @@ class Plotter(object):
                     "cat": True
                 }
                 collection.insert_one(data)
-                
-        """
-
-        if "Background Noise" in label_list:
-            background_index = label_list.index("Background Noise")
-            background_score = score_list[background_index]
-            if background_score > 0.8:
-                print("Diam je yak yak ke")
-
-        if "Bird" in label_list:
+                print("Successfully insert database")
+        
+        # Check if "Bird" category is in the classification results
+        elif "Bird" in label_list:
             bird_index = label_list.index("Bird")
             bird_score = score_list[bird_index]
-            if bird_score > 0.8:
+            if bird_score > 0.8:  # Use bird_score instead of cat_score
+                print("Bird detected!")
                 data = {
                     "bird": True
                 }
-                print("Bebird sape yang bunyi tu")
-                # Insert data into MongoDB
                 collection.insert_one(data)
-            else:
-                data = {
-                    "bird": False
-                }
+                print("Successfully alert Bird to database")
+                
+        # Add other conditional checks for different categories if needed...
 
-        if "Grasshopper" in label_list:
-            grasshopper_index = label_list.index("Grasshopper")
-            grasshopper_score = score_list[grasshopper_index]
-            if grasshopper_score > 0.8:
-                print("Belalang kupu kupu")
-
-        if "Rat" in label_list:
-            rat_index = label_list.index("Rat")
-            rat_score = score_list[rat_index]
-            if rat_score > 0.8:
-                print("Cit Cit")
-
-        if "Snake" in label_list:
-            snake_index = label_list.index("Snake")
-            snake_score = score_list[snake_index]
-            if snake_score > 0.8:
-                print("SSSSSSSSSSSSSSS motherfucker")
-    */
-    """
         self._axes.barh(label_list[::-1], score_list[::-1])
 
         # Wait for the UI event.
